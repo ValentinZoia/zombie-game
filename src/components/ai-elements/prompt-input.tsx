@@ -210,10 +210,7 @@ export type PromptInputProps = Omit<
     code: "max_files" | "max_file_size" | "accept";
     message: string;
   }) => void;
-  onSubmit: (
-    message: PromptInputMessage,
-    event: FormEvent<HTMLFormElement>
-  ) => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export const PromptInput = ({
@@ -402,11 +399,11 @@ export const PromptInput = ({
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    const files: FileUIPart[] = items.map(({ ...item }) => ({
-      ...item,
-    }));
+    // const files: FileUIPart[] = items.map(({ ...item }) => ({
+    //   ...item,
+    // }));
 
-    onSubmit({ text: event.currentTarget.message.value, files }, event);
+    onSubmit(event);
   };
 
   const ctx = useMemo<AttachmentsContext>(
@@ -539,7 +536,7 @@ export const PromptInputButton = ({
   ...props
 }: PromptInputButtonProps) => {
   const newSize =
-    (size ?? Children.count(props.children) > 1) ? "default" : "icon";
+    size ?? Children.count(props.children) > 1 ? "default" : "icon";
 
   return (
     <Button
